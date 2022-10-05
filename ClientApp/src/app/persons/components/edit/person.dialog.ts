@@ -1,29 +1,26 @@
-import { BaseApiOutput } from 'src/app/core/models/output/base-api-output';
-import { HelperService } from 'src/app/core/services/helper/helper.service';
 import { ProviderService } from '../../../core/services/provider/provider.service';
-import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CpfCnpjValidator } from 'src/app/core/functions/cpf-cnpj-validator.function';
-import { GeneralService } from 'src/app/core/services/general/general.service';
-import { EmployeeService } from '../../services/employee.service';
-import { Employee } from '../../models/output/employee';
+import { PersonService } from '../../services/person.service';
+import { Person } from '../../models/output/person';
 
 @Component({
-  selector: 'app-employee-dialog',
-  templateUrl: './employee.dialog.html',
-  styleUrls: ['./employee.dialog.scss']
+  selector: 'app-person-dialog',
+  templateUrl: './person.dialog.html',
+  styleUrls: ['./person.dialog.scss']
 })
-export class EmployeeDialog implements OnInit {
+export class PersonDialog implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
-    private employeeService: EmployeeService,
+    private PersonService: PersonService,
     private providerService: ProviderService,
-    public dialogRef: MatDialogRef<EmployeeDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: Employee,
+    public dialogRef: MatDialogRef<PersonDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: Person,
   ) {
     if (!this.data)
-      this.data = new Employee();
+      this.data = new Person();
   }
 
   form?: FormGroup;
@@ -33,25 +30,25 @@ export class EmployeeDialog implements OnInit {
     this._assignForm();
   }
 
-  onSubmit = async (item: Employee) => {
+  onSubmit = async (item: Person) => {
     if (!this._validateData())
       return;
 
     try {
       this.isLoading = true;
 
-      const result = await this.employeeService.upsert(item);
+      const result = await this.PersonService.upsert(item);
       if (!result?.success) {
-        this.providerService.toast.warningMessage(result?.message ?? 'Ocorreu um erro ao tentar salvar o Funcionário!')
+        this.providerService.toast.warningMessage(result?.message ?? 'Ocorreu um erro ao tentar salvar a Pessoa!')
         return;
       }
 
-      this.providerService.toast.successMessage(result.message ?? 'Funcionário salvo com sucesso!')
+      this.providerService.toast.successMessage(result.message ?? 'Pessoa salva com sucesso!')
       this.closeDialog();
     }
     catch (e) {
       console.error('e => ', e)
-      this.providerService.toast.errorMessage('Ocorreu um erro ao tentar salvar o Funcionário!')
+      this.providerService.toast.errorMessage('Ocorreu um erro ao tentar salvar a Pessoa!')
     }
     finally {
       this.isLoading = false;

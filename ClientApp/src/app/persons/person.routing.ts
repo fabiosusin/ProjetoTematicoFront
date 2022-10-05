@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { EmployeePage } from './components/list/employee.page';
+import { PersonPage } from './components/list/person.page';
 
-const routes: Routes = [{ path: '', component: EmployeePage }];
+const routes: Routes = [{ path: '', component: PersonPage }];
 
 @NgModule({
   imports: [
@@ -10,4 +10,4 @@ const routes: Routes = [{ path: '', component: EmployeePage }];
   ],
   exports: [RouterModule]
 })
-export class EmployeeRoutingModule { }
+export class PersonRoutingModule { }

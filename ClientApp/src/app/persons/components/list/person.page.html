@@ -8,7 +8,7 @@
         <div class="accordion-item-header" (click)="accordionItem.toggle()">
           <div class="header-filters flex-center">
             <i class="fa-solid fa-users"></i>
-            <h1>Buscar Funcionários</h1>
+            <h1>Buscar Pessoas</h1>
           </div>
           <span class="accordion-item-description">
             <i *ngIf="!accordionItem.expanded" class="fas fa-plus"></i>
@@ -34,7 +34,7 @@
   </div>
   <div class="content flex-center-baseline">
     <div class="bg-new flex-end">
-      <button mat-raised-button class="default-button" (click)="openDialog()">Adicionar Funcionário</button>
+      <button mat-raised-button class="default-button" (click)="openDialog()">Adicionar Pessoa</button>
     </div>
     <div class="bg-table flex-center">
       <table mat-table [dataSource]="dataSource">

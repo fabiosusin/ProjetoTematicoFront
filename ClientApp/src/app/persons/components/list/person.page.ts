@@ -1,25 +1,25 @@
-import { Employee } from '../../models/output/employee';
+import { Person } from '../../models/output/person';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProviderService } from 'src/app/core/services/provider/provider.service';
-import { EmployeeFilters } from '../../models/input/employee-filters-input';
-import { EmployeeFiltersInput } from '../../models/input/employee-list-input';
-import { EmployeeService } from '../../services/employee.service';
+import { PersonFilters } from '../../models/input/person-filters-input';
+import { PersonFiltersInput } from '../../models/input/person-list-input';
+import { PersonService } from '../../services/person.service';
 import { MatDialog } from '@angular/material/dialog';
 import { PageTitleService } from 'src/app/core/services/page-title/page-title.service';
 import { UserData } from 'src/app/core/models/output/session-output';
-import { EmployeeDialog } from '../edit/employee.dialog';
+import { PersonDialog } from '../edit/person.dialog';
 
 @Component({
-  selector: 'app-employee-page',
-  templateUrl: './employee.page.html',
-  styleUrls: ['./employee.page.scss']
+  selector: 'app-Person-page',
+  templateUrl: './Person.page.html',
+  styleUrls: ['./Person.page.scss']
 })
-export class EmployeePage implements OnInit {
+export class PersonPage implements OnInit {
   constructor(
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
-    private employeeService: EmployeeService,
+    private personService: PersonService,
     private pageTitleService: PageTitleService,
     private providerService: ProviderService) {
   }
@@ -29,18 +29,18 @@ export class EmployeePage implements OnInit {
   isMasterUser: boolean = false;
   isLoading: boolean = false;
   displayedColumns: string[] = ['name', 'cpfCnpj', 'edit', 'delete'];
-  dataSource: Employee[] = [];
-  filters: EmployeeFiltersInput = new EmployeeFiltersInput();
+  dataSource: Person[] = [];
+  filters: PersonFiltersInput = new PersonFiltersInput();
 
   name?: string;
 
   ngOnInit(): void {
-    this.pageTitleService.changePageTitle('Funcionários');
+    this.pageTitleService.changePageTitle('Pessoas');
     this.getData();
     this.assignForm();
   }
 
-  submit = async (input: EmployeeFilters) => {
+  submit = async (input: PersonFilters) => {
     this.filters.filters = input
     this.getData();
   }
@@ -54,11 +54,11 @@ export class EmployeePage implements OnInit {
       if (!this.filters.filters)
         this.filters.filters = {};
 
-      const result = await this.employeeService.getList(this.filters)
+      const result = await this.personService.getList(this.filters)
       if (!result?.success)
         this.providerService.toast.warningMessage(result?.message ?? 'Ocorreu um erro ao tentar buscar os Clientes!')
 
-      this.dataSource = result?.employees ?? [];
+      this.dataSource = result?.persons ?? [];
     }
     catch (e) {
       console.error('e => ', e)
@@ -75,7 +75,7 @@ export class EmployeePage implements OnInit {
 
     try {
       this.isLoading = true;
-      const result = await this.employeeService.deleteEmployee(id);
+      const result = await this.personService.deletePerson(id);
       if (!result?.success) {
         this.providerService.toast.warningMessage(result?.message ?? 'Ocorreu um erro ao tentar deletar o Cliente!')
         return;
@@ -93,8 +93,8 @@ export class EmployeePage implements OnInit {
     }
   }
 
-  openDialog(data?: Employee): void {
-    const dialogRef = this.dialog.open(EmployeeDialog, {
+  openDialog(data?: Person): void {
+    const dialogRef = this.dialog.open(PersonDialog, {
       width: '700px',
       data: data,
       disableClose: true

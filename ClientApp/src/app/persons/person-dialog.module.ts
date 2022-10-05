@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppCommonModule } from '../core/modules/app-common.module';
 import { AppMaterialModule } from '../core/modules/app-material.module';
-import { EmployeeDialog } from './components/edit/employee.dialog';
+import { PersonDialog } from './components/edit/person.dialog';
 
 @NgModule({
   imports: [
@@ -13,8 +13,8 @@ import { EmployeeDialog } from './components/edit/employee.dialog';
     AppMaterialModule,
     AppCommonModule
   ],
-  exports: [EmployeeDialog],
-  declarations: [EmployeeDialog],
-  entryComponents: [EmployeeDialog]
+  exports: [PersonDialog],
+  declarations: [PersonDialog],
+  entryComponents: [PersonDialog]
 })
-export class EmployeeDialogPageModule { }
+export class PersonDialogPageModule { }

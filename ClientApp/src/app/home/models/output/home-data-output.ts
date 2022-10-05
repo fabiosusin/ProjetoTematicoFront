@@ -3,7 +3,7 @@ import { CompleteDateOutput } from "src/app/core/models/output/complete-date-out
 
 export class HomeDataOutput extends BaseApiOutput {
   equipment?: HomeDataItemInfo;
-  employee?: HomeDataItemInfo;
+  person?: HomeDataItemInfo;
   equipmentsLoaned?: HomeDataItemInfo;
   date?: CompleteDateOutput;
 }

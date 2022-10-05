@@ -1,13 +1,13 @@
 <app-loading *ngIf="isLoading"></app-loading>
 <div class="page-container flex-center">
   <div class="header flex-between" *ngIf="data">
-    <div class="data employees flex-between" *ngIf="data.employee">
+    <div class="data employees flex-between" *ngIf="data.person">
       <div class="icon flex-center">
         <i class="fas fa-user"></i>
       </div>
       <div class="info flex-center">
-        <h2 class="first-line">{{data.employee.quantity}}</h2>
-        <h4 class="second-line">Funcionários</h4>
+        <h2 class="first-line">{{data.person.quantity}}</h2>
+        <h4 class="second-line">Pessoas</h4>
       </div>
     </div>
     <div class="data equipments flex-between" *ngIf="data.equipment">
