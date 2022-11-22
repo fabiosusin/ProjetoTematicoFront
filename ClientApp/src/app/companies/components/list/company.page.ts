@@ -35,7 +35,7 @@ export class CompanyPage implements OnInit {
   name?: string;
 
   ngOnInit(): void {
-    this.pageTitleService.changePageTitle('Empresas');
+    this.pageTitleService.changePageTitle('Parceiros');
     this.getData();
     this.assignForm();
   }
@@ -56,13 +56,13 @@ export class CompanyPage implements OnInit {
 
       const result = await this.CompanyService.getList(this.filters)
       if (!result?.success)
-        this.providerService.toast.warningMessage(result?.message ?? 'Ocorreu um erro ao tentar buscar as Empresas!')
+        this.providerService.toast.warningMessage(result?.message ?? 'Ocorreu um erro ao tentar buscar os Parceiros!')
 
       this.dataSource = result?.companies ?? [];
     }
     catch (e) {
       console.error('e => ', e)
-      this.providerService.toast.errorMessage('Ocorreu um erro ao tentar buscar as Empresas!')
+      this.providerService.toast.errorMessage('Ocorreu um erro ao tentar buscar os Parceiros!')
     }
     finally {
       this.isLoading = false;
@@ -77,7 +77,7 @@ export class CompanyPage implements OnInit {
       this.isLoading = true;
       const result = await this.CompanyService.deleteCompany(id);
       if (!result?.success) {
-        this.providerService.toast.warningMessage(result?.message ?? 'Ocorreu um erro ao tentar deletar a Empresa!')
+        this.providerService.toast.warningMessage(result?.message ?? 'Ocorreu um erro ao tentar deletar o Parceiro!')
         return;
       }
 

@@ -1,0 +1,55 @@
+<app-loading *ngIf="isLoading"></app-loading>
+<!-- <ng-container *ngIf="form" [formGroup]="form"> -->
+<ng-container>
+  <div mat-dialog-content class="dialog-content grid-3-cl">
+
+    <!-- <mat-form-field class="default-form-field" appearance="fill">
+      <mat-label>CPF</mat-label>
+      <input matInput formControlName="cnpj" type="tel" [cpfcnpj] required>
+      <mat-error *ngIf="!form?.get('cnpj')?.valid">Informe o CPF da Empresa</mat-error>
+    </mat-form-field> -->
+    <mat-form-field class="default-form-field" appearance="fill">
+      <mat-label>Nº Processo</mat-label>
+      <input matInput required>
+    </mat-form-field>
+    <mat-form-field class="default-form-field" appearance="fill">
+      <mat-label>Vara de Origem</mat-label>
+      <input matInput required>
+    </mat-form-field>
+    <mat-form-field class="default-form-field" appearance="fill">
+      <mat-label>Condenações anteriores</mat-label>
+      <input matInput required>
+    </mat-form-field>
+    <mat-form-field class="default-form-field" appearance="fill">
+      <mat-label>Tipos de Condenações anteriores</mat-label>
+      <input matInput required>
+    </mat-form-field>
+    <mat-form-field class="default-form-field" appearance="fill">
+      <mat-label>Horas cumpridas</mat-label>
+      <input matInput required>
+    </mat-form-field>
+    <mat-form-field class="default-form-field" appearance="fill">
+      <mat-label>Horas restantes a cumprir</mat-label>
+      <input matInput required>
+    </mat-form-field>
+    <mat-form-field class="default-form-field" appearance="fill">
+      <mat-label>Valor da Multa</mat-label>
+      <input matInput required>
+    </mat-form-field>
+    <mat-form-field class="default-form-field" appearance="fill">
+      <mat-label>Tipo de Crime</mat-label>
+      <input matInput required>
+    </mat-form-field>
+    <mat-form-field class="default-form-field" appearance="fill">
+      <mat-label>Data da Pena a cumprir</mat-label>
+      <input matInput required>
+    </mat-form-field>
+  </div>
+  <!-- <div mat-dialog-actions class="bg-buttons flex-end" *ngIf="data"> -->
+  <div mat-dialog-actions class="bg-buttons flex-end">
+    <button class="close-button" mat-button>Sair</button>
+    <button class="save-button" mat-button cdkFocusInitial>Salvar</button>
+    <!-- <button class="close-button" mat-button (click)="closeDialog()">Sair</button>
+      <button class="save-button" mat-button cdkFocusInitial (click)="onSubmit(form.value)">Salvar</button> -->
+  </div>
+</ng-container>

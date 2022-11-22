@@ -1,0 +1,55 @@
+<app-loading *ngIf="isLoading"></app-loading>
+<!-- <ng-container *ngIf="form" [formGroup]="form"> -->
+<ng-container>
+  <div mat-dialog-content class="dialog-content grid-3-cl">
+
+    <!-- <mat-form-field class="default-form-field" appearance="fill">
+      <mat-label>CPF</mat-label>
+      <input matInput formControlName="cnpj" type="tel" [cpfcnpj] required>
+      <mat-error *ngIf="!form?.get('cnpj')?.valid">Informe o CPF da Empresa</mat-error>
+    </mat-form-field> -->
+    <mat-form-field class="default-form-field" appearance="fill">
+      <mat-label>Renda Familiar</mat-label>
+      <input matInput required>
+    </mat-form-field>
+    <mat-form-field class="default-form-field" appearance="fill">
+      <mat-label>Municipio</mat-label>
+      <input matInput required>
+    </mat-form-field>
+    <mat-form-field class="default-form-field" appearance="fill">
+      <mat-label>Habilidades Laboriais</mat-label>
+      <input matInput required>
+    </mat-form-field>
+    <mat-form-field class="default-form-field" appearance="fill">
+      <mat-label>Bairro</mat-label>
+      <input matInput required>
+    </mat-form-field>
+    <mat-form-field class="default-form-field" appearance="fill">
+      <mat-label>Rua</mat-label>
+      <input matInput required>
+    </mat-form-field>
+    <mat-form-field class="default-form-field" appearance="fill">
+      <mat-label>Número</mat-label>
+      <input matInput required>
+    </mat-form-field>
+    <mat-form-field class="default-form-field" appearance="fill">
+      <mat-label>Telefone</mat-label>
+      <input matInput required>
+    </mat-form-field>
+    <mat-form-field class="default-form-field" appearance="fill">
+      <mat-label>Complemento</mat-label>
+      <input matInput required>
+    </mat-form-field>
+    <mat-form-field class="default-form-field" appearance="fill">
+      <mat-label>Horários de Trabalho</mat-label>
+      <input matInput required>
+    </mat-form-field>
+  </div>
+  <!-- <div mat-dialog-actions class="bg-buttons flex-end" *ngIf="data"> -->
+  <div mat-dialog-actions class="bg-buttons flex-end">
+    <button class="close-button" mat-button>Sair</button>
+    <button class="save-button" mat-button cdkFocusInitial>Salvar</button>
+    <!-- <button class="close-button" mat-button (click)="closeDialog()">Sair</button>
+      <button class="save-button" mat-button cdkFocusInitial (click)="onSubmit(form.value)">Salvar</button> -->
+  </div>
+</ng-container>
