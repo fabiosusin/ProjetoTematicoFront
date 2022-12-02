@@ -24,7 +24,7 @@ export class FrequencyListPage implements OnInit {
   userSession?: UserData;
   isMasterUser: boolean = false;
   isLoading: boolean = false;
-  displayedColumns: string[] = ['name', 'cnpj', 'edit', 'delete'];
+  displayedColumns: string[] = ['atividade', 'dia','entrada','saida','tempoAtividadeDia', 'totalHorasCumpridas', 'totalHorasRemanescentes', 'edit', 'delete'];
   dataSource: Company[] = [];
 
   name?: string;

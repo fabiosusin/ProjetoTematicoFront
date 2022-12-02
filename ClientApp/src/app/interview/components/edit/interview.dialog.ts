@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-interview-dialog',
@@ -6,10 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./interview.dialog.scss']
 })
 export class InterviewDialog implements OnInit {
-  constructor() { }
+  constructor(public dialogRef: MatDialogRef<any>) { }
 
   isLoading?: boolean;
 
   ngOnInit(): void {
+  }
+
+  closeDialog(): void {
+    this.dialogRef.close();
   }
 }

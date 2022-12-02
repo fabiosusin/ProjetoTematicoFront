@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-situation-dialog',
@@ -6,10 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./situation.dialog.scss']
 })
 export class SituationDialog implements OnInit {
-  constructor() { }
+  constructor(public dialogRef: MatDialogRef<any>) { }
 
   isLoading?: boolean;
 
   ngOnInit(): void {
+  }
+
+  closeDialog(): void {
+    this.dialogRef.close();
   }
 }

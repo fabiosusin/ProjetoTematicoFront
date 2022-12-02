@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-frequency-dialog',
@@ -6,10 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./frequency.dialog.scss']
 })
 export class FrequencyDialog implements OnInit {
-  constructor() { }
+  constructor(public dialogRef: MatDialogRef<any>) { }
 
   isLoading?: boolean;
 
   ngOnInit(): void {
+  }
+
+  closeDialog(): void {
+    this.dialogRef.close();
   }
 }

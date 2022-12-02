@@ -47,7 +47,7 @@
   </div>
   <!-- <div mat-dialog-actions class="bg-buttons flex-end" *ngIf="data"> -->
   <div mat-dialog-actions class="bg-buttons flex-end">
-    <button class="close-button" mat-button>Sair</button>
+    <button class="close-button" mat-button (click)="closeDialog()">Sair</button>
     <button class="save-button" mat-button cdkFocusInitial>Salvar</button>
     <!-- <button class="close-button" mat-button (click)="closeDialog()">Sair</button>
       <button class="save-button" mat-button cdkFocusInitial (click)="onSubmit(form.value)">Salvar</button> -->

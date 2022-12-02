@@ -8,7 +8,7 @@
         <div class="accordion-item-header" (click)="accordionItem.toggle()">
           <div class="header-filters flex-center">
             <i class="fa-solid fa-industry"></i>
-            <h1>Buscar Parceiros</h1>
+            <h1>Buscar Entrevistas</h1>
           </div>
           <span class="accordion-item-description">
             <i *ngIf="!accordionItem.expanded" class="fas fa-plus"></i>
@@ -24,7 +24,7 @@
               <input matInput formControlName="name">
             </mat-form-field>
             <mat-form-field appearance="fill">
-              <mat-label>CPF/CNPJ</mat-label>
+              <mat-label>Município</mat-label>
               <input matInput formControlName="cpfCnpj" type="tel" [cpfcnpj]>
             </mat-form-field>
             <button mat-raised-button class="default-button">Pesquisar</button>
@@ -36,19 +36,59 @@
   </div>
   <div class="content flex-center-baseline">
     <div class="bg-new flex-end">
-      <button mat-raised-button class="default-button" (click)="openDialog()">Adicionar Empresa</button>
+      <button mat-raised-button class="default-button" (click)="openDialog()">Adicionar Entrevista</button>
     </div>
     <div class="bg-table flex-center">
       <table mat-table [dataSource]="dataSource">
 
-        <ng-container matColumnDef="name">
+        <ng-container matColumnDef="nome">
           <th mat-header-cell *matHeaderCellDef> Nome </th>
-          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          <td mat-cell ></td>
         </ng-container>
 
-        <ng-container matColumnDef="cnpj">
-          <th mat-header-cell *matHeaderCellDef> CPF </th>
-          <td mat-cell *matCellDef="let element"> {{element.cnpj | cpfCnpj}} </td>
+        <ng-container matColumnDef="rendaFamiliar">
+          <th mat-header-cell *matHeaderCellDef> Renda familiar </th>
+          <td mat-cell ></td>
+        </ng-container>
+
+        <ng-container matColumnDef="municipio">
+          <th mat-header-cell *matHeaderCellDef> Municipio </th>
+          <td mat-cell ></td>
+        </ng-container>
+
+        <ng-container matColumnDef="habilidadesLaborais">
+          <th mat-header-cell *matHeaderCellDef> Habilidades Laborais </th>
+          <td mat-cell ></td>
+        </ng-container>
+
+        <ng-container matColumnDef="bairro">
+          <th mat-header-cell *matHeaderCellDef> Bairro </th>
+          <td mat-cell ></td>
+        </ng-container>
+
+        <ng-container matColumnDef="rua">
+          <th mat-header-cell *matHeaderCellDef> Rua </th>
+          <td mat-cell ></td>
+        </ng-container>
+
+        <ng-container matColumnDef="numero">
+          <th mat-header-cell *matHeaderCellDef> Número </th>
+          <td mat-cell ></td>
+        </ng-container>
+
+        <ng-container matColumnDef="telefone">
+          <th mat-header-cell *matHeaderCellDef> Telefone </th>
+          <td mat-cell ></td>
+        </ng-container>
+
+        <ng-container matColumnDef="complemento">
+          <th mat-header-cell *matHeaderCellDef> Complemento </th>
+          <td mat-cell ></td>
+        </ng-container>
+
+        <ng-container matColumnDef="horariosTrabalho">
+          <th mat-header-cell *matHeaderCellDef> Horários de trabalho </th>
+          <td mat-cell ></td>
         </ng-container>
 
         <ng-container matColumnDef="edit">

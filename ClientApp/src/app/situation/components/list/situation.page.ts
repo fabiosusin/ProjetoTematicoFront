@@ -24,7 +24,7 @@ export class SituationListPage implements OnInit {
   userSession?: UserData;
   isMasterUser: boolean = false;
   isLoading: boolean = false;
-  displayedColumns: string[] = ['name', 'cnpj', 'edit', 'delete'];
+  displayedColumns: string[] = ['numeroProcesso', 'varaOrigem','condenaAnteriores', 'tipoCondenaAnteriores', 'horasCumpridas','horasRestantes', 'valorMulta', 'tipoCrime', 'dataPena', 'edit', 'delete'];
   dataSource: Company[] = [];
 
   name?: string;
