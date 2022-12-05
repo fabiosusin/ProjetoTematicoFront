@@ -1,47 +1,33 @@
 <app-loading *ngIf="isLoading"></app-loading>
-<!-- <ng-container *ngIf="form" [formGroup]="form"> -->
-<ng-container>
+<ng-container *ngIf="form" [formGroup]="form">
   <div mat-dialog-content class="dialog-content grid-3-cl">
-
-    <!-- <mat-form-field class="default-form-field" appearance="fill">
-      <mat-label>CPF</mat-label>
-      <input matInput formControlName="cnpj" type="tel" [cpfcnpj] required>
-      <mat-error *ngIf="!form?.get('cnpj')?.valid">Informe o CPF da Empresa</mat-error>
-    </mat-form-field> -->
     <mat-form-field class="default-form-field" appearance="fill">
       <mat-label>Atividade que Desempenha</mat-label>
-      <input matInput required>
-    </mat-form-field>
-    <mat-form-field class="default-form-field" appearance="fill">
-      <mat-label>Dia</mat-label>
-      <input matInput required>
+      <input matInput formControlName="activity">
     </mat-form-field>
     <mat-form-field class="default-form-field" appearance="fill">
       <mat-label>Entrada</mat-label>
-      <input matInput required>
+      <input matInput formControlName="entryTime" type="date">
     </mat-form-field>
     <mat-form-field class="default-form-field" appearance="fill">
       <mat-label>Saída</mat-label>
-      <input matInput required>
+      <input matInput formControlName="exitTime" type="date">
     </mat-form-field>
     <mat-form-field class="default-form-field" appearance="fill">
       <mat-label>Tempo na Atividade no Dia</mat-label>
-      <input matInput required>
+      <input matInput formControlName="activityTotalTime" [numbers]>
     </mat-form-field>
     <mat-form-field class="default-form-field" appearance="fill">
       <mat-label>Total de Horas Cumpridas</mat-label>
-      <input matInput required>
+      <input matInput formControlName="fulfilledHours" [numbers]>
     </mat-form-field>
     <mat-form-field class="default-form-field" appearance="fill">
       <mat-label>Total de Horas Remanescentes</mat-label>
-      <input matInput required>
+      <input matInput formControlName="remainingHours" [numbers]>
     </mat-form-field>
   </div>
-  <!-- <div mat-dialog-actions class="bg-buttons flex-end" *ngIf="data"> -->
-  <div mat-dialog-actions class="bg-buttons flex-end">
+  <div mat-dialog-actions class="bg-buttons flex-end" *ngIf="data">
     <button class="close-button" mat-button (click)="closeDialog()">Sair</button>
-    <button class="save-button" mat-button cdkFocusInitial>Salvar</button>
-    <!-- <button class="close-button" mat-button (click)="closeDialog()">Sair</button>
-      <button class="save-button" mat-button cdkFocusInitial (click)="onSubmit(form.value)">Salvar</button> -->
+    <button class="save-button" mat-button cdkFocusInitial (click)="onSubmit(form.value)">Salvar</button>
   </div>
 </ng-container>

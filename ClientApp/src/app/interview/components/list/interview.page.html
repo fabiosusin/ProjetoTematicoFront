@@ -41,54 +41,49 @@
     <div class="bg-table flex-center">
       <table mat-table [dataSource]="dataSource">
 
-        <ng-container matColumnDef="nome">
-          <th mat-header-cell *matHeaderCellDef> Nome </th>
-          <td mat-cell ></td>
-        </ng-container>
-
-        <ng-container matColumnDef="rendaFamiliar">
+        <ng-container matColumnDef="familyIncome">
           <th mat-header-cell *matHeaderCellDef> Renda familiar </th>
-          <td mat-cell ></td>
+          <td mat-cell *matCellDef="let element"> R$ {{element.familyIncome | money }} </td>
         </ng-container>
 
-        <ng-container matColumnDef="municipio">
+        <ng-container matColumnDef="workSkills">
+          <th mat-header-cell *matHeaderCellDef> Habilidades Laboriais </th>
+          <td mat-cell *matCellDef="let element"> {{element.workSkills}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="city">
           <th mat-header-cell *matHeaderCellDef> Municipio </th>
-          <td mat-cell ></td>
+          <td mat-cell *matCellDef="let element"> {{element.city}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="habilidadesLaborais">
-          <th mat-header-cell *matHeaderCellDef> Habilidades Laborais </th>
-          <td mat-cell ></td>
-        </ng-container>
-
-        <ng-container matColumnDef="bairro">
+        <ng-container matColumnDef="neighborhood">
           <th mat-header-cell *matHeaderCellDef> Bairro </th>
-          <td mat-cell ></td>
+          <td mat-cell *matCellDef="let element"> {{element.neighborhood}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="rua">
+        <ng-container matColumnDef="street">
           <th mat-header-cell *matHeaderCellDef> Rua </th>
-          <td mat-cell ></td>
+          <td mat-cell *matCellDef="let element"> {{element.street}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="numero">
+        <ng-container matColumnDef="streetNumber">
           <th mat-header-cell *matHeaderCellDef> Número </th>
-          <td mat-cell ></td>
+          <td mat-cell *matCellDef="let element"> {{element.streetNumber}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="telefone">
+        <ng-container matColumnDef="phone">
           <th mat-header-cell *matHeaderCellDef> Telefone </th>
-          <td mat-cell ></td>
+          <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="complemento">
+        <ng-container matColumnDef="complement">
           <th mat-header-cell *matHeaderCellDef> Complemento </th>
-          <td mat-cell ></td>
+          <td mat-cell *matCellDef="let element"> {{element.complement}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="horariosTrabalho">
+        <ng-container matColumnDef="serviceHours">
           <th mat-header-cell *matHeaderCellDef> Horários de trabalho </th>
-          <td mat-cell ></td>
+          <td mat-cell *matCellDef="let element"> {{element.serviceHours | brazilDate}} </td>
         </ng-container>
 
         <ng-container matColumnDef="edit">
@@ -98,10 +93,8 @@
 
         <ng-container matColumnDef="delete">
           <th mat-header-cell *matHeaderCellDef> Deletar </th>
-          <td mat-cell *matCellDef="let element"> <i class="far fa-trash-alt"></i>
+          <td mat-cell *matCellDef="let element" (click)="onClickDelete(element.id)"> <i class="far fa-trash-alt"></i>
           </td>
-          <!-- <td mat-cell *matCellDef="let element" (click)="onClickDelete(element.id)"> <i class="far fa-trash-alt"></i>
-          </td> -->
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

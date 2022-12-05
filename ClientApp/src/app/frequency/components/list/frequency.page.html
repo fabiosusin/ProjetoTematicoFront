@@ -31,45 +31,41 @@
     </cdk-accordion>
   </div>
   <div class="content flex-center-baseline">
-    <div class="bg-new flex-end">
+    <div class="bg-new flex-end"><button mat-raised-button class="default-button" style="margin-right: 10px;">Exportar
+        Frequências</button>
       <button mat-raised-button class="default-button" (click)="openDialog()">Adicionar frequência</button>
     </div>
     <div class="bg-table flex-center">
       <table mat-table [dataSource]="dataSource">
 
-        <ng-container matColumnDef="atividade">
+        <ng-container matColumnDef="activity">
           <th mat-header-cell *matHeaderCellDef> Atividade que desempenha </th>
-          <td mat-cell></td>
+          <td mat-cell *matCellDef="let element"> {{element.activity}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="dia">
-          <th mat-header-cell *matHeaderCellDef> Dia </th>
-          <td mat-cell></td>
-        </ng-container>
-
-        <ng-container matColumnDef="entrada">
+        <ng-container matColumnDef="entryTime">
           <th mat-header-cell *matHeaderCellDef> Entrada </th>
-          <td mat-cell></td>
+          <td mat-cell *matCellDef="let element"> {{element.entryTime | brazilDate }} </td>
         </ng-container>
 
-        <ng-container matColumnDef="saida">
+        <ng-container matColumnDef="exitTime">
           <th mat-header-cell *matHeaderCellDef> Saída </th>
-          <td mat-cell></td>
+          <td mat-cell *matCellDef="let element"> {{element.exitTime | brazilDate }} </td>
         </ng-container>
 
-        <ng-container matColumnDef="tempoAtividadeDia">
+        <ng-container matColumnDef="activityTotalTime">
           <th mat-header-cell *matHeaderCellDef> Tempo de atividade no dia </th>
-          <td mat-cell></td>
+          <td mat-cell *matCellDef="let element"> {{element.activityTotalTime}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="totalHorasCumpridas">
+        <ng-container matColumnDef="fulfilledHours">
           <th mat-header-cell *matHeaderCellDef> Total de horas cumpridas </th>
-          <td mat-cell></td>
+          <td mat-cell *matCellDef="let element"> {{element.fulfilledHours}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="totalHorasRemanescentes">
+        <ng-container matColumnDef="remainingHours">
           <th mat-header-cell *matHeaderCellDef> Total de horas remanescentes </th>
-          <td mat-cell></td>
+          <td mat-cell *matCellDef="let element"> {{element.remainingHours}} </td>
         </ng-container>
 
         <ng-container matColumnDef="edit">
@@ -79,10 +75,8 @@
 
         <ng-container matColumnDef="delete">
           <th mat-header-cell *matHeaderCellDef> Deletar </th>
-          <td mat-cell *matCellDef="let element"> <i class="far fa-trash-alt"></i>
+          <td mat-cell *matCellDef="let element" (click)="onClickDelete(element.id)"> <i class="far fa-trash-alt"></i>
           </td>
-          <!-- <td mat-cell *matCellDef="let element" (click)="onClickDelete(element.id)"> <i class="far fa-trash-alt"></i>
-          </td> -->
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

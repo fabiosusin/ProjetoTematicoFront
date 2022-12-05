@@ -4,8 +4,9 @@ import { ProviderService } from 'src/app/core/services/provider/provider.service
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { PageTitleService } from 'src/app/core/services/page-title/page-title.service';
 import { UserData } from 'src/app/core/models/output/session-output';
-import { Company } from 'src/app/companies/models/output/company';
 import { InterviewDialog } from '../edit/interview.dialog';
+import { InterviewService } from '../../services/interview.service';
+import { Interview } from '../../models/output/interview';
 
 @Component({
   selector: 'app-interview-page',
@@ -17,7 +18,7 @@ export class InterviewListPage implements OnInit {
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
     private pageTitleService: PageTitleService,
-    public dialogRef: MatDialogRef<any>,
+    private interviewService: InterviewService,
     private providerService: ProviderService
   ) {}
 
@@ -26,36 +27,85 @@ export class InterviewListPage implements OnInit {
   isMasterUser: boolean = false;
   isLoading: boolean = false;
   displayedColumns: string[] = [
-    'nome',
-    'rendaFamiliar',
-    'municipio',
-    'habilidadesLaborais',
-    'bairro',
-    'rua',
-    'numero',
-    'telefone',
-    'complemento',
-    'horariosTrabalho',
+    'familyIncome',
+    'workSkills',
+    'city',
+    'neighborhood',
+    'street',
+    'streetNumber',
+    'phone',
+    'complement',
+    'serviceHours',
     'edit',
     'delete',
   ];
-  dataSource: Company[] = [];
+  dataSource: Interview[] = [];
 
   name?: string;
 
   ngOnInit(): void {
     this.pageTitleService.changePageTitle('Entrevista');
+    this.getData();
     this.assignForm();
   }
 
-  openDialog(data?: Company): void {
+  openDialog(data?: Interview): void {
     const dialogRef = this.dialog.open(InterviewDialog, {
       width: '700px',
       data: data,
       disableClose: true,
     });
 
-    // dialogRef.afterClosed().subscribe(() => { this.getData(); });
+    dialogRef.afterClosed().subscribe(() => { this.getData(); });
+  }
+
+  submit = async () => {
+    this.getData();
+  }
+
+  getData = async () => {
+    try {
+      this.userSession = this.providerService.sessionService.getSession().user;
+      this.isMasterUser = this.userSession?.isMasterUser ?? false;
+      this.isLoading = true;
+
+      const result = await this.interviewService.getList()
+      if (!result?.success)
+        this.providerService.toast.warningMessage(result?.message ?? 'Ocorreu um erro ao tentar buscar as Entrevistas!')
+
+      this.dataSource = result?.interviews ?? [];
+    }
+    catch (e) {
+      console.error('e => ', e)
+      this.providerService.toast.errorMessage('Ocorreu um erro ao tentar buscar as Entrevistas!')
+    }
+    finally {
+      this.isLoading = false;
+    }
+  }
+
+  onClickDelete = async (id: string) => {
+    if (!confirm("Deseja deletar a Entrevista?"))
+      return;
+
+    try {
+      this.isLoading = true;
+      const result = await this.interviewService.deleteInterview(id);
+      if (!result?.success) {
+        this.providerService.toast.warningMessage(result?.message ?? 'Ocorreu um erro ao tentar deletar a Entrevista!')
+        return;
+      }
+
+      this.providerService.toast.successMessage('Entrevista deletada com sucesso!');
+      this.getData();
+    }
+    catch (e) {
+      console.error('e => ', e)
+      this.providerService.toast.errorMessage('Ocorreu um erro ao tentar deletar a Entrevista!')
+    }
+    finally {
+      this.isLoading = false;
+    }
   }
 
   private assignForm = async () => {
@@ -64,8 +114,4 @@ export class InterviewListPage implements OnInit {
       cpfCnpj: [''],
     });
   };
-
-  closeDialog(): void {
-    this.dialogRef.close();
-  }
 }
