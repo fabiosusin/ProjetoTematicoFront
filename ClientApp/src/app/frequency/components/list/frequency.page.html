@@ -32,6 +32,10 @@
   </div>
   <div class="content flex-center-baseline">
     <div class="bg-new flex-end">
+      <button mat-raised-button class="default-button" style="margin-right: 10px;">
+      Importar Frequências
+      <input #fileUpload type="file" accept="json" class="inputFile" (change)="import($event)" />
+    </button>
       <button mat-raised-button class="default-button" style="margin-right: 10px;" (click)="export()">
         Exportar Frequências
       </button>

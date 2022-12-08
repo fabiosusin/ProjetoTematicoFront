@@ -6,6 +6,7 @@ import { BaseApiOutput } from 'src/app/core/models/output/base-api-output';
 import { FrequencyListOutput } from '../models/output/frequency-list-output';
 import { Frequency } from '../models/output/frequency';
 import { OpenFileOutput } from 'src/app/core/models/output/open-file-output';
+import { ImportFile } from 'src/app/core/models/input/import-file';
 
 @Injectable({ providedIn: 'root' })
 export class FrequencyService extends BaseApiRequestsService {
@@ -23,4 +24,5 @@ export class FrequencyService extends BaseApiRequestsService {
   upsert = async (input: Frequency): Promise<BaseApiOutput> => await this.post(this.baseUrl + 'upsert-Frequency', input);
   export = async (): Promise<OpenFileOutput> => await this.get(this.baseUrl + 'export');
   report = async (): Promise<OpenFileOutput> => await this.get(this.baseUrl + 'report');
+  import = async (data: ImportFile): Promise<BaseApiOutput> => await this.post(this.baseUrl + 'import', data);
 }

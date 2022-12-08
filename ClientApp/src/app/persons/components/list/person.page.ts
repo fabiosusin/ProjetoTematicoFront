@@ -13,6 +13,7 @@ import { PersonDialog } from '../edit/person.dialog';
 import { FilesService } from 'src/app/core/services/files/files.service';
 import { GeneralService } from 'src/app/core/services/general/general.service';
 import { Location } from '@angular/common';
+import { HelperService } from 'src/app/core/services/helper/helper.service';
 
 
 @Component({
@@ -66,13 +67,13 @@ export class PersonPage extends BasePage implements OnInit {
 
       const result = await this.personService.getList(this.filters)
       if (!result?.success)
-        this.providerService.toast.warningMessage(result?.message ?? 'Ocorreu um erro ao tentar buscar os Clientes!')
+        this.providerService.toast.warningMessage(result?.message ?? 'Ocorreu um erro ao tentar buscar as Pessoas!')
 
       this.dataSource = result?.persons ?? [];
     }
     catch (e) {
       console.error('e => ', e)
-      this.providerService.toast.errorMessage('Ocorreu um erro ao tentar buscar os Clientes!')
+      this.providerService.toast.errorMessage('Ocorreu um erro ao tentar buscar as Pessoas!')
     }
     finally {
       this.isLoading = false;
@@ -80,23 +81,23 @@ export class PersonPage extends BasePage implements OnInit {
   }
 
   onClickDelete = async (id: string) => {
-    if (!confirm("Deseja deletar o Cliente?"))
+    if (!confirm("Deseja deletar o Pessoa?"))
       return;
 
     try {
       this.isLoading = true;
       const result = await this.personService.deletePerson(id);
       if (!result?.success) {
-        this.providerService.toast.warningMessage(result?.message ?? 'Ocorreu um erro ao tentar deletar o Cliente!')
+        this.providerService.toast.warningMessage(result?.message ?? 'Ocorreu um erro ao tentar deletar a Pessoa!')
         return;
       }
 
-      this.providerService.toast.successMessage('Cliente deletado com sucesso!');
+      this.providerService.toast.successMessage('Pessoa deletada com sucesso!');
       this.getData();
     }
     catch (e) {
       console.error('e => ', e)
-      this.providerService.toast.errorMessage('Ocorreu um erro ao tentar deletar o Cliente!')
+      this.providerService.toast.errorMessage('Ocorreu um erro ao tentar deletar a Pessoa!')
     }
     finally {
       this.isLoading = false;
@@ -119,13 +120,35 @@ export class PersonPage extends BasePage implements OnInit {
 
       const result = await this.personService.export()
       if (!result?.fileContents)
-        this.providerService.toast.warningMessage('Ocorreu um erro ao tentar exportar os Clientes!')
+        this.providerService.toast.warningMessage('Ocorreu um erro ao tentar exportar as Pessoas!')
 
       super.downloadDocument(result);
     }
     catch (e) {
       console.error('e => ', e)
-      this.providerService.toast.errorMessage('Ocorreu um erro ao tentar exportar os Clientes!')
+      this.providerService.toast.errorMessage('Ocorreu um erro ao tentar exportar as Pessoas!')
+    }
+    finally {
+      this.isLoading = false;
+    }
+  }
+
+  async import(event: any) {
+    const base64Output = await HelperService.GetBase64FromFile(event);
+    if (!base64Output?.success) {
+      this.providerService.toast.errorMessage(base64Output?.message ?? 'Não foi possível importar as Pessoas');
+      return;
+    }
+
+    try {
+      this.isLoading = true;
+      const result = await this.personService.import({ dataBase64: base64Output.base64  })
+      if (result?.success) {
+        this.providerService.toast.successMessage('Contrato Anexado com Sucesso');
+        this.getData();
+      }
+      else
+        this.providerService.toast.errorMessage(result?.message ?? 'Não foi possível importar as Pessoas');
     }
     finally {
       this.isLoading = false;

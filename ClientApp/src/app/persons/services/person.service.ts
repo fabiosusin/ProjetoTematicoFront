@@ -7,6 +7,7 @@ import { PersonFiltersInput } from '../models/input/person-list-input';
 import { PersonListOutput } from '../models/output/person-list-output';
 import { Person } from '../models/output/person';
 import { OpenFileOutput } from 'src/app/core/models/output/open-file-output';
+import { ImportFile } from 'src/app/core/models/input/import-file';
 
 @Injectable({ providedIn: 'root' })
 export class PersonService extends BaseApiRequestsService {
@@ -23,4 +24,5 @@ export class PersonService extends BaseApiRequestsService {
   deletePerson = async (id: string): Promise<BaseApiOutput> => await this.delete(this.baseUrl + `delete/${id}`);
   upsert = async (input: Person): Promise<BaseApiOutput> => await this.post(this.baseUrl + 'upsert-Person', input);
   export = async (): Promise<OpenFileOutput> => await this.get(this.baseUrl + 'export');
+  import = async (data: ImportFile): Promise<BaseApiOutput> => await this.post(this.baseUrl + 'import', data);
 }

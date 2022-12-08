@@ -11,6 +11,7 @@ import { Frequency } from '../../models/output/frequency';
 import { FilesService } from 'src/app/core/services/files/files.service';
 import { GeneralService } from 'src/app/core/services/general/general.service';
 import { Location } from '@angular/common';
+import { HelperService } from 'src/app/core/services/helper/helper.service';
 
 @Component({
   selector: 'app-frequency-page',
@@ -119,6 +120,28 @@ export class FrequencyListPage extends BasePage implements OnInit {
     catch (e) {
       console.error('e => ', e)
       this.providerService.toast.errorMessage('Ocorreu um erro ao tentar exportar as Frequências!')
+    }
+    finally {
+      this.isLoading = false;
+    }
+  }
+
+  async import(event: any) {
+    const base64Output = await HelperService.GetBase64FromFile(event);
+    if (!base64Output?.success) {
+      this.providerService.toast.errorMessage(base64Output?.message ?? 'Não foi possível importar as Pessoas');
+      return;
+    }
+
+    try {
+      this.isLoading = true;
+      const result = await this.frequencyService.import({ dataBase64: base64Output.base64  })
+      if (result?.success) {
+        this.providerService.toast.successMessage('Contrato Anexado com Sucesso');
+        this.getData();
+      }
+      else
+        this.providerService.toast.errorMessage(result?.message ?? 'Não foi possível importar as Pessoas');
     }
     finally {
       this.isLoading = false;
