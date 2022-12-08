@@ -1,7 +1,10 @@
 <app-loading *ngIf="isLoading"></app-loading>
 <ng-container *ngIf="form" [formGroup]="form">
   <div mat-dialog-content class="dialog-content grid-3-cl">
-
+    <mat-form-field class="default-form-field" appearance="fill">
+      <mat-label>CPF da Pessoa</mat-label>
+      <input matInput formControlName="personDocument" [cpfcnpj]>
+    </mat-form-field>
     <mat-form-field class="default-form-field" appearance="fill">
       <mat-label>Renda Familiar</mat-label>
       <input matInput formControlName="familyIncome" [money]>
@@ -36,7 +39,7 @@
     </mat-form-field>
     <mat-form-field class="default-form-field" appearance="fill">
       <mat-label>Horários de Trabalho</mat-label>
-      <input matInput formControlName="serviceHours" type="date">
+      <input matInput formControlName="serviceHours">
     </mat-form-field>
   </div>
   <div mat-dialog-actions class="bg-buttons flex-end" *ngIf="data">

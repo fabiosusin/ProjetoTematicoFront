@@ -55,14 +55,18 @@ export class FrequencyDialog implements OnInit {
 
   private _assignForm = async () => {
 
+    const entryDate = new Date(this.data.entryTime ?? new Date()).toISOString();
+    const exitDate = new Date(this.data.exitTime ?? new Date()).toISOString();
     this.form = this.formBuilder.group({
+      id: [this.data.id],
+      personDocument: [this.data.personDocument],
       activity: [this.data.activity],
-      entryTime: [this.data.entryTime],
-      exitTime: [this.data.exitTime],
-      activityTotalTime: [this.data.activityTotalTime],
-      fulfilledHours: [this.data.fulfilledHours],
-      remainingHours: [this.data.remainingHours],
-      appear: [true]
+      entryTime: [entryDate.replace(entryDate.substring(entryDate.indexOf('.')), '')],
+      exitTime: [exitDate.replace(exitDate.substring(exitDate.indexOf('.')), '')],
+      activityTotalTime: [this.data.activityTotalTime ?? 0],
+      fulfilledHours: [this.data.fulfilledHours ?? 0],
+      remainingHours: [this.data.remainingHours ?? 0],
+      appear: [this.data.appear ??  false]
     });
   };
 

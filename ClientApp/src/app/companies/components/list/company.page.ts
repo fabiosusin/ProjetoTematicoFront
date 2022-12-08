@@ -70,7 +70,7 @@ export class CompanyPage implements OnInit {
   }
 
   onClickDelete = async (id: string) => {
-    if (!confirm("Deseja deletar a Empresa?"))
+    if (!confirm("Deseja deletar o Parceiro?"))
       return;
 
     try {
@@ -81,7 +81,7 @@ export class CompanyPage implements OnInit {
         return;
       }
 
-      this.providerService.toast.successMessage('Empresa deletada com sucesso!');
+      this.providerService.toast.successMessage('Parceiro deletado com sucesso!');
       this.getData();
     }
     catch (e) {

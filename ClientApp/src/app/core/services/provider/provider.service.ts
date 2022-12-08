@@ -22,8 +22,7 @@ export class ProviderService {
     if (sessionMenu)
       return sessionMenu;
 
-    const allyId = '';
-    sessionMenu = await this.menuService.getMenu(allyId);
+    sessionMenu = await this.menuService.getMenu();
     this.sessionService.setSideMenu(sessionMenu);
 
     return sessionMenu;

@@ -57,6 +57,8 @@ export class SituationDialog implements OnInit {
   private _assignForm = async () => {
 
     this.form = this.formBuilder.group({
+      id: [this.data.id],
+      personDocument: [this.data.personDocument],
       processNumber: [this.data.processNumber ?? 0],
       varaOrigem: [this.data.varaOrigem],
       convictionQuantity: [this.data.convictionQuantity ?? 0],

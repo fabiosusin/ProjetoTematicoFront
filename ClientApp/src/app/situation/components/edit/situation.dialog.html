@@ -3,6 +3,10 @@
   <div mat-dialog-content class="dialog-content grid-3-cl">
 
     <mat-form-field class="default-form-field" appearance="fill">
+      <mat-label>CPF da Pessoa</mat-label>
+      <input matInput formControlName="personDocument" [cpfcnpj]>
+    </mat-form-field>
+    <mat-form-field class="default-form-field" appearance="fill">
       <mat-label>Nº Processo</mat-label>
       <input matInput formControlName="processNumber" [numbers]>
     </mat-form-field>

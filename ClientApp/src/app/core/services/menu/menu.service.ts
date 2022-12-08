@@ -6,15 +6,19 @@ import { SideMenuNode } from '../../models/side-menu';
 
 @Injectable({ providedIn: 'root' })
 export class MenuService extends BaseApiRequestsService {
-  constructor(
-    protected session: SessionService,
-    protected http: HttpClient
-  ) {
+  constructor(protected session: SessionService, protected http: HttpClient) {
     super(session, http);
-    this.baseUrl = 'Menu/'
+    this.baseUrl = 'Menu/';
   }
 
   protected baseUrl: string;
 
-  getMenu = async (allyId: string): Promise<SideMenuNode[]> => await this.get(this.baseUrl + 'get-menu' + MenuService.generateUrlQuery({ allyId, userId: this.session.getSession().user?.userId }));
+  getMenu = async (): Promise<SideMenuNode[]> =>
+    await this.get(this.baseUrl + 'get-menu/' + MenuSystemTypeEnum.Ciap);
+}
+
+export enum MenuSystemTypeEnum {
+  Unknown,
+  Ciap,
+  Entity,
 }

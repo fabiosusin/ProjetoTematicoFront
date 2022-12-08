@@ -2,6 +2,8 @@
 import { BaseDataOutput } from "src/app/core/models/output/base-data-output";
 
 export class Interview extends BaseDataOutput {
+  personId?: string;
+  personDocument?: string;
   familyIncome?: number
   neighborhood?: string;
   city?: string;
@@ -12,5 +14,5 @@ export class Interview extends BaseDataOutput {
   educationDegree?: string;
   workSkills?: number;
   consumesAlcohol?: boolean
-  serviceHours?: Date;
+  serviceHours?: number;
 }

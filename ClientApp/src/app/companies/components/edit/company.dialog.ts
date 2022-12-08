@@ -61,6 +61,10 @@ export class CompanyDialog implements OnInit {
       id: [this.data.id],
       name: [this.data.name, [Validators.required]],
       cnpj: [this.data.cnpj, Validators.compose([Validators.required, Validators.minLength(11), Validators.maxLength(14), CpfCnpjValidator()])],
+      socialReason: [this.data.socialReason],
+      address: [this.data.address],
+      phone: [this.data.phone],
+      email: [this.data.email]
     });
   };
 

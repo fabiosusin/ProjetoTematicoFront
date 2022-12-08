@@ -56,6 +56,8 @@ export class InterviewDialog implements OnInit {
   private _assignForm = async () => {
 
     this.form = this.formBuilder.group({
+      id: [this.data.id],
+      personDocument: [this.data.personDocument],
       familyIncome: [this.data.familyIncome],
       neighborhood: [this.data.neighborhood],
       city: [this.data.city],
