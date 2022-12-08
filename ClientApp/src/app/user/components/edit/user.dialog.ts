@@ -100,7 +100,7 @@ export class UserDialog implements OnInit {
     this.data.password = this.data.passwordValidation = '';
 
     this.form = this.formBuilder.group({
-      userId: [this.data.userId],
+      userId: [this.data.userId ?? 0],
       isMasterAdmin: [this.data.isMasterAdmin ?? false],
       email: [this.data.email, [Validators.required]],
       name: [this.data.name, [Validators.required]],

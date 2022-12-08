@@ -15,7 +15,7 @@ export class AddUserInput {
       this.password = data.password;
   }
   isMasterAdmin?: boolean;
-  userId?: string;
+  userId?: number;
   name?: string;
   email?: string;
   password?: string;

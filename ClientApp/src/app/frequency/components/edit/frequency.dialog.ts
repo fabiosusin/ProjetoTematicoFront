@@ -58,7 +58,7 @@ export class FrequencyDialog implements OnInit {
     const entryDate = new Date(this.data.entryTime ?? new Date()).toISOString();
     const exitDate = new Date(this.data.exitTime ?? new Date()).toISOString();
     this.form = this.formBuilder.group({
-      id: [this.data.id],
+      id: [this.data.id ?? 0],
       personDocument: [this.data.personDocument],
       activity: [this.data.activity],
       entryTime: [entryDate.replace(entryDate.substring(entryDate.indexOf('.')), '')],

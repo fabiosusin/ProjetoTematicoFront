@@ -5,6 +5,7 @@ import { Location } from '@angular/common';
 import { ProviderService } from "../services/provider/provider.service";
 import { GeneralService } from '../services/general/general.service';
 import { FilesService } from '../services/files/files.service';
+import { OpenFileOutput } from '../models/output/open-file-output';
 
 @Directive()
 export class BasePage<TDataReceive = {}> implements OnInit {
@@ -26,10 +27,9 @@ export class BasePage<TDataReceive = {}> implements OnInit {
   openLink = (link?: string) => link ? window.open(link) : {};
   initData = async (): Promise<void> => { };
   onClickBack = () => this.location.back();
-  downloadDocument = async (id: string, type: DocTypeEnum) => {
+  downloadDocument(file: OpenFileOutput) {
     try {
       this.isLoading = true;
-      const file = await this.generalService.generateDoc(id, type);
       this.filesService.openFile(file.fileContents, file.fileDownloadName, file.contentType);
     }
     catch { this.provider.toast.errorMessage('Ocorreu um erro ao Gerar o documento!') }

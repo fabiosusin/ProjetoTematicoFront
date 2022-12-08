@@ -2,7 +2,7 @@
 import { BaseDataOutput } from "src/app/core/models/output/base-data-output";
 
 export class Situation extends BaseDataOutput {
-  personId?: string;
+  personId?: number;
   personDocument?: string;
   processNumber?: number;
   varaOrigem?: string;

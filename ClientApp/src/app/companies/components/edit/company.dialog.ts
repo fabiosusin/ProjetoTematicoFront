@@ -58,7 +58,7 @@ export class CompanyDialog implements OnInit {
   private _assignForm = async () => {
 
     this.form = this.formBuilder.group({
-      id: [this.data.id],
+      id: [this.data.id ?? 0],
       name: [this.data.name, [Validators.required]],
       cnpj: [this.data.cnpj, Validators.compose([Validators.required, Validators.minLength(11), Validators.maxLength(14), CpfCnpjValidator()])],
       socialReason: [this.data.socialReason],

@@ -1,3 +1,3 @@
 export class BaseDataOutput {
-  id?: string;
+  id?: number;
 }

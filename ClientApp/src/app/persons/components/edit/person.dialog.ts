@@ -57,7 +57,7 @@ export class PersonDialog implements OnInit {
 
   private _assignForm = async () => {
     this.form = this.formBuilder.group({
-      id: [this.data.id],
+      id: [this.data.id ?? 0],
       name: [this.data.name, [Validators.required]],
       cpfCnpj: [this.data.cpfCnpj, Validators.compose([Validators.required, Validators.minLength(11), Validators.maxLength(14), CpfCnpjValidator()])],
       naturally: [this.data.naturally],

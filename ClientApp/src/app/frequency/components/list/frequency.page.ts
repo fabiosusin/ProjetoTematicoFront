@@ -1,3 +1,4 @@
+import { BasePage } from './../../../core/components/base-page';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProviderService } from 'src/app/core/services/provider/provider.service';
@@ -7,19 +8,27 @@ import { UserData } from 'src/app/core/models/output/session-output';
 import { FrequencyDialog } from '../edit/frequency.dialog';
 import { FrequencyService } from '../../services/frequency.service';
 import { Frequency } from '../../models/output/frequency';
+import { FilesService } from 'src/app/core/services/files/files.service';
+import { GeneralService } from 'src/app/core/services/general/general.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-frequency-page',
   templateUrl: './frequency.page.html',
   styleUrls: ['./frequency.page.scss']
 })
-export class FrequencyListPage implements OnInit {
+export class FrequencyListPage extends BasePage implements OnInit {
   constructor(
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
     private frequencyService: FrequencyService,
     private pageTitleService: PageTitleService,
-    private providerService: ProviderService) {
+    private providerService: ProviderService,
+    protected location: Location,
+    protected provider: ProviderService,
+    protected generalService: GeneralService,
+    protected filesService: FilesService) {
+    super(location, provider, generalService, filesService);
   }
 
   form?: FormGroup;
@@ -31,7 +40,7 @@ export class FrequencyListPage implements OnInit {
 
   name?: string;
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.pageTitleService.changePageTitle('Frequência');
     this.getData();
     this.assignForm();
@@ -91,6 +100,25 @@ export class FrequencyListPage implements OnInit {
     catch (e) {
       console.error('e => ', e)
       this.providerService.toast.errorMessage('Ocorreu um erro ao tentar deletar a Frequência!')
+    }
+    finally {
+      this.isLoading = false;
+    }
+  }
+
+  async export() {
+    try {
+      this.isLoading = true;
+
+      const result = await this.frequencyService.export()
+      if (!result?.fileContents)
+        this.providerService.toast.warningMessage('Ocorreu um erro ao tentar exportar as Frequências!')
+
+      super.downloadDocument(result);
+    }
+    catch (e) {
+      console.error('e => ', e)
+      this.providerService.toast.errorMessage('Ocorreu um erro ao tentar exportar as Frequências!')
     }
     finally {
       this.isLoading = false;
