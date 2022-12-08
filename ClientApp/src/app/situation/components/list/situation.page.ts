@@ -1,3 +1,4 @@
+import { FrequencyService } from './../../../frequency/services/frequency.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProviderService } from 'src/app/core/services/provider/provider.service';
@@ -7,31 +8,41 @@ import { UserData } from 'src/app/core/models/output/session-output';
 import { Company } from 'src/app/companies/models/output/company';
 import { SituationDialog } from '../edit/situation.dialog';
 import { SituationService } from '../../services/situation.service';
+import { BasePage } from 'src/app/core/components/base-page';
+import { Location } from '@angular/common';
+import { FilesService } from 'src/app/core/services/files/files.service';
+import { GeneralService } from 'src/app/core/services/general/general.service';
 
 @Component({
   selector: 'app-situation-page',
   templateUrl: './situation.page.html',
   styleUrls: ['./situation.page.scss']
 })
-export class SituationListPage implements OnInit {
+export class SituationListPage extends BasePage implements OnInit {
   constructor(
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
     private situationService: SituationService,
     private pageTitleService: PageTitleService,
-    private providerService: ProviderService) {
+    private frequencyService: FrequencyService,
+    private providerService: ProviderService,
+    protected location: Location,
+    protected provider: ProviderService,
+    protected generalService: GeneralService,
+    protected filesService: FilesService) {
+    super(location, provider, generalService, filesService);
   }
 
   form?: FormGroup;
   userSession?: UserData;
   isMasterUser: boolean = false;
   isLoading: boolean = false;
-  displayedColumns: string[] = ['processNumber', 'varaOrigem', 'convictionQuantity', 'convictionType', 'fulfilledHours', 'remainingHours', 'finePrice', 'crimeType', 'edit', 'delete'];
+  displayedColumns: string[] = ['processNumber', 'varaOrigem', 'convictionQuantity', 'convictionType', 'fulfilledHours', 'remainingHours', 'finePrice', 'crimeType', 'report', 'edit', 'delete'];
   dataSource: Company[] = [];
 
   name?: string;
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.pageTitleService.changePageTitle('Situação');
     this.getData();
     this.assignForm();
@@ -97,6 +108,24 @@ export class SituationListPage implements OnInit {
     }
   }
 
+  async report() {
+    try {
+      this.isLoading = true;
+
+      const result = await this.frequencyService.report()
+      if (!result?.fileContents)
+        this.providerService.toast.warningMessage('Ocorreu um erro ao tentar exportar os Clientes!')
+
+      super.downloadDocument(result);
+    }
+    catch (e) {
+      console.error('e => ', e)
+      this.providerService.toast.errorMessage('Ocorreu um erro ao tentar exportar os Clientes!')
+    }
+    finally {
+      this.isLoading = false;
+    }
+  }
 
   private assignForm = async () => {
     this.form = this.formBuilder.group({

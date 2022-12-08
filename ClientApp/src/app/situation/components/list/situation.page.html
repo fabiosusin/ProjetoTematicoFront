@@ -77,6 +77,11 @@
           <td mat-cell *matCellDef="let element"> {{element.crimeType}} </td>
         </ng-container>
 
+        <ng-container matColumnDef="report">
+          <th mat-header-cell *matHeaderCellDef> Relatório de Frequência </th>
+          <td mat-cell *matCellDef="let element" (click)="report()"> <i class="fas fa-file-excel"></i></td>
+        </ng-container>
+
         <ng-container matColumnDef="edit">
           <th mat-header-cell *matHeaderCellDef> Editar </th>
           <td mat-cell *matCellDef="let element" (click)="openDialog(element)"> <i class="fas fa-pencil-alt"></i> </td>

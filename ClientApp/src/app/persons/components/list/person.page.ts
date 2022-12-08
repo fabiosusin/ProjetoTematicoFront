@@ -1,3 +1,4 @@
+import { BasePage } from './../../../core/components/base-page';
 import { Person } from '../../models/output/person';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -9,19 +10,28 @@ import { MatDialog } from '@angular/material/dialog';
 import { PageTitleService } from 'src/app/core/services/page-title/page-title.service';
 import { UserData } from 'src/app/core/models/output/session-output';
 import { PersonDialog } from '../edit/person.dialog';
+import { FilesService } from 'src/app/core/services/files/files.service';
+import { GeneralService } from 'src/app/core/services/general/general.service';
+import { Location } from '@angular/common';
+
 
 @Component({
   selector: 'app-Person-page',
   templateUrl: './Person.page.html',
   styleUrls: ['./Person.page.scss']
 })
-export class PersonPage implements OnInit {
+export class PersonPage extends BasePage implements OnInit {
   constructor(
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
     private personService: PersonService,
     private pageTitleService: PageTitleService,
-    private providerService: ProviderService) {
+    private providerService: ProviderService,
+    protected location: Location,
+    protected provider: ProviderService,
+    protected generalService: GeneralService,
+    protected filesService: FilesService) {
+    super(location, provider, generalService, filesService);
   }
 
   form?: FormGroup;
@@ -34,7 +44,7 @@ export class PersonPage implements OnInit {
 
   name?: string;
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.pageTitleService.changePageTitle('Pessoas');
     this.getData();
     this.assignForm();
@@ -101,6 +111,25 @@ export class PersonPage implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(() => { this.getData(); });
+  }
+
+  async export() {
+    try {
+      this.isLoading = true;
+
+      const result = await this.personService.export()
+      if (!result?.fileContents)
+        this.providerService.toast.warningMessage('Ocorreu um erro ao tentar exportar os Clientes!')
+
+      super.downloadDocument(result);
+    }
+    catch (e) {
+      console.error('e => ', e)
+      this.providerService.toast.errorMessage('Ocorreu um erro ao tentar exportar os Clientes!')
+    }
+    finally {
+      this.isLoading = false;
+    }
   }
 
   private assignForm = async () => {
