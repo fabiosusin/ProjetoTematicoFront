@@ -1,3 +1,4 @@
+import { Situation } from './../../models/output/situation';
 import { FrequencyService } from './../../../frequency/services/frequency.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -37,8 +38,8 @@ export class SituationListPage extends BasePage implements OnInit {
   userSession?: UserData;
   isMasterUser: boolean = false;
   isLoading: boolean = false;
-  displayedColumns: string[] = ['processNumber', 'varaOrigem', 'convictionQuantity', 'convictionType', 'fulfilledHours', 'remainingHours', 'finePrice', 'crimeType', 'report', 'edit', 'delete'];
-  dataSource: Company[] = [];
+  displayedColumns: string[] = ['personDocument', 'processNumber', 'varaOrigem', 'convictionQuantity', 'convictionType', 'fulfilledHours', 'remainingHours', 'finePrice', 'crimeType', 'report', 'edit', 'delete'];
+  dataSource: Situation[] = [];
 
   name?: string;
 
@@ -49,7 +50,7 @@ export class SituationListPage extends BasePage implements OnInit {
   }
 
 
-  openDialog(data?: Company): void {
+  openDialog(data?: Situation): void {
     const dialogRef = this.dialog.open(SituationDialog, {
       width: '700px',
       data: data,
@@ -60,16 +61,16 @@ export class SituationListPage extends BasePage implements OnInit {
   }
 
   submit = async () => {
-    this.getData();
+    this.getData(this.form?.get('process')?.value ?? 0);
   }
 
-  getData = async () => {
+  getData = async (number?: number) => {
     try {
       this.userSession = this.providerService.sessionService.getSession().user;
       this.isMasterUser = this.userSession?.isMasterUser ?? false;
       this.isLoading = true;
 
-      const result = await this.situationService.getList()
+      const result = await this.situationService.getList(number ?? 0)
       if (!result?.success)
         this.providerService.toast.warningMessage(result?.message ?? 'Ocorreu um erro ao tentar buscar as Situaçãos!')
 
@@ -108,13 +109,13 @@ export class SituationListPage extends BasePage implements OnInit {
     }
   }
 
-  async report() {
+  async report(doc: string) {
     try {
       this.isLoading = true;
 
-      const result = await this.frequencyService.report()
+      const result = await this.frequencyService.report({ filters: { cpfCnpj: doc } })
       if (!result?.fileContents)
-        this.providerService.toast.warningMessage('Ocorreu um erro ao tentar exportar os Clientes!')
+        this.providerService.toast.warningMessage('Ocorreu um erro ao tentar gerar o Relatório!')
 
       super.downloadDocument(result);
     }
@@ -129,8 +130,7 @@ export class SituationListPage extends BasePage implements OnInit {
 
   private assignForm = async () => {
     this.form = this.formBuilder.group({
-      name: [''],
-      cpfCnpj: ['']
+      process: [0]
     });
   };
 }

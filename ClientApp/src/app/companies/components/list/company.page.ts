@@ -106,7 +106,7 @@ export class CompanyPage implements OnInit {
   private assignForm = async () => {
     this.form = this.formBuilder.group({
       name: [''],
-      cpfCnpj: ['']
+      cnpj: ['']
     });
   };
 }

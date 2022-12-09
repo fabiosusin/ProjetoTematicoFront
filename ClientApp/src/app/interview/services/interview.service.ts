@@ -16,12 +16,8 @@ export class InterviewService extends BaseApiRequestsService {
   }
   baseUrl = 'Interview/';
 
-  getList = async (): Promise<InterviewListOutput> => await this.post(this.baseUrl + 'list');
-
+  getList = async (document: string): Promise<InterviewListOutput> => await this.get(this.baseUrl + 'list' + InterviewService.generateUrlQuery({ document }));
   getById = async (id: string): Promise<Interview> => await this.get(this.baseUrl + `get-by-id/${id}`);
-
   deleteInterview = async (id: string): Promise<BaseApiOutput> => await this.delete(this.baseUrl + `delete/${id}`);
-
   upsert = async (input: Interview): Promise<BaseApiOutput> => await this.post(this.baseUrl + 'upsert-Interview', input);
-
 }

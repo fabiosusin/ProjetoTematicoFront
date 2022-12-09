@@ -12,6 +12,8 @@ import { FilesService } from 'src/app/core/services/files/files.service';
 import { GeneralService } from 'src/app/core/services/general/general.service';
 import { Location } from '@angular/common';
 import { HelperService } from 'src/app/core/services/helper/helper.service';
+import { FrequencyFilters } from '../../models/input/frequency-filters-input';
+import { FrequencyFiltersInput } from '../../models/input/frequency-list-input';
 
 @Component({
   selector: 'app-frequency-page',
@@ -36,8 +38,9 @@ export class FrequencyListPage extends BasePage implements OnInit {
   userSession?: UserData;
   isMasterUser: boolean = false;
   isLoading: boolean = false;
-  displayedColumns: string[] = ['activity', 'entryTime', 'exitTime', 'activityTotalTime', 'fulfilledHours', 'remainingHours', 'edit', 'delete'];
+  displayedColumns: string[] = ['personDocument', 'activity', 'entryTime', 'exitTime', 'activityTotalTime', 'fulfilledHours', 'remainingHours', 'edit', 'delete'];
   dataSource: Frequency[] = [];
+  filters: FrequencyFiltersInput = new FrequencyFiltersInput();
 
   name?: string;
 
@@ -58,7 +61,8 @@ export class FrequencyListPage extends BasePage implements OnInit {
     dialogRef.afterClosed().subscribe(() => { this.getData(); });
   }
 
-  submit = async () => {
+  submit = async (input: FrequencyFilters) => {
+    this.filters.filters = input
     this.getData();
   }
 
@@ -68,7 +72,7 @@ export class FrequencyListPage extends BasePage implements OnInit {
       this.isMasterUser = this.userSession?.isMasterUser ?? false;
       this.isLoading = true;
 
-      const result = await this.frequencyService.getList()
+      const result = await this.frequencyService.getList(this.filters)
       if (!result?.success)
         this.providerService.toast.warningMessage(result?.message ?? 'Ocorreu um erro ao tentar buscar as Frequências!')
 
@@ -111,7 +115,7 @@ export class FrequencyListPage extends BasePage implements OnInit {
     try {
       this.isLoading = true;
 
-      const result = await this.frequencyService.export()
+      const result = await this.frequencyService.export(this.filters)
       if (!result?.fileContents)
         this.providerService.toast.warningMessage('Ocorreu um erro ao tentar exportar as Frequências!')
 
@@ -150,7 +154,7 @@ export class FrequencyListPage extends BasePage implements OnInit {
 
   private assignForm = async () => {
     this.form = this.formBuilder.group({
-      name: [''],
+      activity: [''],
       cpfCnpj: ['']
     });
   };

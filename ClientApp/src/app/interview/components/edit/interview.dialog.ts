@@ -66,9 +66,9 @@ export class InterviewDialog implements OnInit {
       phone: [this.data.phone],
       streetNumber: [this.data.streetNumber],
       educationDegree: [this.data.educationDegree],
-      workSkills: [this.data.workSkills],
+      workSkills: [this.data.workSkills ?? 0],
       consumesAlcohol: [false],
-      serviceHours: [this.data.serviceHours]
+      serviceHours: [this.data.serviceHours ?? 0]
     });
   };
 

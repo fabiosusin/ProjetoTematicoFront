@@ -28,7 +28,10 @@ export class OnlyNumbersDirective implements OnChanges {
   }
 
   onInputChange() {
-    let value: String = this.model.value || '';
+    let value = this.model.value || '';
+    if (typeof value == 'number')
+      value = value.toString();
+
     value = (value.match(/\d+/g) || []).join('');
 
     this.model.viewToModelUpdate(value);

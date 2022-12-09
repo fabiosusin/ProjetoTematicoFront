@@ -16,12 +16,8 @@ export class SituationService extends BaseApiRequestsService {
   }
   baseUrl = 'Situation/';
 
-  getList = async (): Promise<SituationListOutput> => await this.post(this.baseUrl + 'list');
-
+  getList = async (number: number): Promise<SituationListOutput> => await this.get(this.baseUrl + 'list' + SituationService.generateUrlQuery({ number }));
   getByNumber = async (number: number): Promise<Situation> => await this.get(this.baseUrl + `get-by-number/${number}`);
-
   deleteSituation = async (id: string): Promise<BaseApiOutput> => await this.delete(this.baseUrl + `delete/${id}`);
-
   upsert = async (input: Situation): Promise<BaseApiOutput> => await this.post(this.baseUrl + 'upsert-Situation', input);
-
 }

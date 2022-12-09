@@ -7,6 +7,7 @@ import { FrequencyListOutput } from '../models/output/frequency-list-output';
 import { Frequency } from '../models/output/frequency';
 import { OpenFileOutput } from 'src/app/core/models/output/open-file-output';
 import { ImportFile } from 'src/app/core/models/input/import-file';
+import { FrequencyFiltersInput } from '../models/input/frequency-list-input';
 
 @Injectable({ providedIn: 'root' })
 export class FrequencyService extends BaseApiRequestsService {
@@ -18,11 +19,11 @@ export class FrequencyService extends BaseApiRequestsService {
   }
   baseUrl = 'Frequency/';
 
-  getList = async (): Promise<FrequencyListOutput> => await this.post(this.baseUrl + 'list');
+  getList = async (input: FrequencyFiltersInput): Promise<FrequencyListOutput> => await this.post(this.baseUrl + 'list', input);
   getById = async (id: string): Promise<Frequency> => await this.get(this.baseUrl + `get-by-id/${id}`);
   deleteFrequency = async (id: string): Promise<BaseApiOutput> => await this.delete(this.baseUrl + `delete/${id}`);
   upsert = async (input: Frequency): Promise<BaseApiOutput> => await this.post(this.baseUrl + 'upsert-Frequency', input);
-  export = async (): Promise<OpenFileOutput> => await this.get(this.baseUrl + 'export');
-  report = async (): Promise<OpenFileOutput> => await this.get(this.baseUrl + 'report');
+  export = async (input: FrequencyFiltersInput): Promise<OpenFileOutput> => await this.post(this.baseUrl + 'export', input);
+  report = async (input: FrequencyFiltersInput): Promise<OpenFileOutput> => await this.post(this.baseUrl + 'report', input);
   import = async (data: ImportFile): Promise<BaseApiOutput> => await this.post(this.baseUrl + 'import', data);
 }

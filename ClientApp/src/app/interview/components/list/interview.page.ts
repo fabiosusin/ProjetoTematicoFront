@@ -20,22 +20,21 @@ export class InterviewListPage implements OnInit {
     private pageTitleService: PageTitleService,
     private interviewService: InterviewService,
     private providerService: ProviderService
-  ) {}
+  ) { }
 
   form?: FormGroup;
   userSession?: UserData;
   isMasterUser: boolean = false;
   isLoading: boolean = false;
   displayedColumns: string[] = [
+    'personDocument',
     'familyIncome',
-    'workSkills',
     'city',
     'neighborhood',
     'street',
     'streetNumber',
     'phone',
     'complement',
-    'serviceHours',
     'edit',
     'delete',
   ];
@@ -60,16 +59,16 @@ export class InterviewListPage implements OnInit {
   }
 
   submit = async () => {
-    this.getData();
+    this.getData(this.form?.get('cpfCnpj')?.value ?? 0);
   }
 
-  getData = async () => {
+  getData = async (cpfCnpj?: string) => {
     try {
       this.userSession = this.providerService.sessionService.getSession().user;
       this.isMasterUser = this.userSession?.isMasterUser ?? false;
       this.isLoading = true;
 
-      const result = await this.interviewService.getList()
+      const result = await this.interviewService.getList(cpfCnpj ?? '')
       if (!result?.success)
         this.providerService.toast.warningMessage(result?.message ?? 'Ocorreu um erro ao tentar buscar as Entrevistas!')
 
@@ -110,7 +109,6 @@ export class InterviewListPage implements OnInit {
 
   private assignForm = async () => {
     this.form = this.formBuilder.group({
-      name: [''],
       cpfCnpj: [''],
     });
   };
