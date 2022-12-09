@@ -8,9 +8,11 @@ import { GetFileOutput } from '../../models/output/get-file-output';
 import jspdf from 'jspdf';
 import html2canvas from 'html2canvas';
 import { DocumentTypeEnum } from '../../models/enum/document-type-enum';
+import { MenuSystemTypeEnum } from '../menu/menu.service';
 
 @Injectable({ providedIn: 'root' })
 export class HelperService {
+
   static CountryPrefix = '55';
   static removeSpecialCharsRegex = /(\.|\/|\-|\(|\)|\ )/g;
   static emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -23,6 +25,7 @@ export class HelperService {
 
   constructor() { }
 
+  static SystemType = () => MenuSystemTypeEnum.Ciap;
   static removeSpecialChars = (value: string) => (value || '').toString().replace(HelperService.removeSpecialCharsRegex, '');
   static isEmailValid = (email: string) => !!HelperService.emailRegex.exec(email);
   static isPhoneValid = (phone: string) => !!HelperService.phoneRegex.exec(phone);

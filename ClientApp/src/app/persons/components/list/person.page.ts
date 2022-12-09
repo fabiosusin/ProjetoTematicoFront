@@ -14,6 +14,7 @@ import { FilesService } from 'src/app/core/services/files/files.service';
 import { GeneralService } from 'src/app/core/services/general/general.service';
 import { Location } from '@angular/common';
 import { HelperService } from 'src/app/core/services/helper/helper.service';
+import { MenuSystemTypeEnum } from 'src/app/core/services/menu/menu.service';
 
 
 @Component({
@@ -41,12 +42,14 @@ export class PersonPage extends BasePage implements OnInit {
   isLoading: boolean = false;
   displayedColumns: string[] = ['name', 'cpfCnpj', 'edit', 'delete'];
   dataSource: Person[] = [];
+  isMain: boolean = false;
   filters: PersonFiltersInput = new PersonFiltersInput();
 
   name?: string;
 
   async ngOnInit(): Promise<void> {
     this.pageTitleService.changePageTitle('Pessoas');
+    this.isMain = HelperService.SystemType() == MenuSystemTypeEnum.Ciap;
     this.getData();
     this.assignForm();
   }

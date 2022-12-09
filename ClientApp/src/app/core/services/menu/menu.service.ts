@@ -1,3 +1,4 @@
+import { HelperService } from 'src/app/core/services/helper/helper.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BaseApiRequestsService } from 'src/app/core/services/api/base-api-requests.service';
@@ -14,7 +15,7 @@ export class MenuService extends BaseApiRequestsService {
   protected baseUrl: string;
 
   getMenu = async (): Promise<SideMenuNode[]> =>
-    await this.get(this.baseUrl + 'get-menu/' + MenuSystemTypeEnum.Ciap);
+    await this.get(this.baseUrl + 'get-menu/' + HelperService.SystemType());
 }
 
 export enum MenuSystemTypeEnum {

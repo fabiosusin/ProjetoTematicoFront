@@ -14,6 +14,7 @@ import { Location } from '@angular/common';
 import { HelperService } from 'src/app/core/services/helper/helper.service';
 import { FrequencyFilters } from '../../models/input/frequency-filters-input';
 import { FrequencyFiltersInput } from '../../models/input/frequency-list-input';
+import { MenuSystemTypeEnum } from 'src/app/core/services/menu/menu.service';
 
 @Component({
   selector: 'app-frequency-page',
@@ -41,11 +42,12 @@ export class FrequencyListPage extends BasePage implements OnInit {
   displayedColumns: string[] = ['personDocument', 'activity', 'entryTime', 'exitTime', 'activityTotalTime', 'fulfilledHours', 'remainingHours', 'doc', 'edit', 'delete'];
   dataSource: Frequency[] = [];
   filters: FrequencyFiltersInput = new FrequencyFiltersInput();
-
+  isMain: boolean = false;
   name?: string;
 
   async ngOnInit(): Promise<void> {
     this.pageTitleService.changePageTitle('Frequência');
+    this.isMain = HelperService.SystemType() == MenuSystemTypeEnum.Ciap;
     this.getData();
     this.assignForm();
   }
