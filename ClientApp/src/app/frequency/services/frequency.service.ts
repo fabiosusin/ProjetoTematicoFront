@@ -23,6 +23,7 @@ export class FrequencyService extends BaseApiRequestsService {
   getById = async (id: string): Promise<Frequency> => await this.get(this.baseUrl + `get-by-id/${id}`);
   deleteFrequency = async (id: string): Promise<BaseApiOutput> => await this.delete(this.baseUrl + `delete/${id}`);
   upsert = async (input: Frequency): Promise<BaseApiOutput> => await this.post(this.baseUrl + 'upsert-Frequency', input);
+  generateDoc = async (id: string): Promise<OpenFileOutput> => await this.get(this.baseUrl + 'generate-doc/' + id);
   export = async (input: FrequencyFiltersInput): Promise<OpenFileOutput> => await this.post(this.baseUrl + 'export', input);
   report = async (input: FrequencyFiltersInput): Promise<OpenFileOutput> => await this.post(this.baseUrl + 'report', input);
   import = async (data: ImportFile): Promise<BaseApiOutput> => await this.post(this.baseUrl + 'import', data);

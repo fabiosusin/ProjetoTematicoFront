@@ -38,7 +38,7 @@ export class FrequencyListPage extends BasePage implements OnInit {
   userSession?: UserData;
   isMasterUser: boolean = false;
   isLoading: boolean = false;
-  displayedColumns: string[] = ['personDocument', 'activity', 'entryTime', 'exitTime', 'activityTotalTime', 'fulfilledHours', 'remainingHours', 'edit', 'delete'];
+  displayedColumns: string[] = ['personDocument', 'activity', 'entryTime', 'exitTime', 'activityTotalTime', 'fulfilledHours', 'remainingHours', 'doc', 'edit', 'delete'];
   dataSource: Frequency[] = [];
   filters: FrequencyFiltersInput = new FrequencyFiltersInput();
 
@@ -111,6 +111,25 @@ export class FrequencyListPage extends BasePage implements OnInit {
     }
   }
 
+  async generateDoc(id: string) {
+    try {
+      this.isLoading = true;
+
+      const result = await this.frequencyService.generateDoc(id)
+      if (!result?.fileContents)
+        this.providerService.toast.warningMessage('Ocorreu um erro ao tentar gerar Documento das Frequências!')
+
+      super.downloadDocument(result);
+    }
+    catch (e) {
+      console.error('e => ', e)
+      this.providerService.toast.errorMessage('Ocorreu um erro ao tentar gerar Documento das Frequências!')
+    }
+    finally {
+      this.isLoading = false;
+    }
+  }
+
   async export() {
     try {
       this.isLoading = true;
@@ -139,7 +158,7 @@ export class FrequencyListPage extends BasePage implements OnInit {
 
     try {
       this.isLoading = true;
-      const result = await this.frequencyService.import({ dataBase64: base64Output.base64  })
+      const result = await this.frequencyService.import({ dataBase64: base64Output.base64 })
       if (result?.success) {
         this.providerService.toast.successMessage('Contrato Anexado com Sucesso');
         this.getData();

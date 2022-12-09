@@ -27,7 +27,7 @@ export class BasePage<TDataReceive = {}> implements OnInit {
   openLink = (link?: string) => link ? window.open(link) : {};
   initData = async (): Promise<void> => { };
   onClickBack = () => this.location.back();
-  downloadDocument(file: OpenFileOutput) {
+  downloadDocument(file: any) {
     try {
       this.isLoading = true;
       this.filesService.openFile(file.fileContents, file.fileDownloadName, file.contentType);
